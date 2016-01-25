@@ -1,0 +1,8 @@
+{
+  "name": "rtforth-web",
+  "version": "0.1.0",
+  "main": "main.js",
+  "dependencies": {
+    "webpack": "~1.12.12"
+  }
+}
