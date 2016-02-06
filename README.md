@@ -1,5 +1,5 @@
 # Along #
-A Web-based IDE for all Forths implementing along.f.
+A Web-based IDE for all Forths implementing [along.f](doc/along.f.md).
 
     npm install
     ./node_modules/.bin/webpack
