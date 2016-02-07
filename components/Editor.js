@@ -1,17 +1,17 @@
 import React, { Component } from 'react'
 import brace from 'brace'
-import 'brace/mode/forth'
-import 'brace/theme/github'
 
 class Editor extends Component {
   componentDidMount() {
-    const { name } = this.props;
+    const {
+      name, mode, theme,
+    } = this.props;
     this.editor = ace.edit(name);
-    this.editor.getSession().setMode('ace/mode/forth');
-    this.editor.setTheme('ace/theme/github');
+    this.editor.getSession().setMode('ace/mode/' + mode);
+    this.editor.setTheme('ace/theme/' + theme);
     this.editor.setOptions({
-      minLines: 20,
-      maxLines: 20,
+      minLines: 16,
+      maxLines: 16,
       fontSize: 16,
     });
   }
