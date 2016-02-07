@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import AceEditor from 'react-ace'
-import brace from 'brace';
-import 'brace/mode/forth'
-import 'brace/theme/github'
+import Editor from '../components/Editor'
 
 function onChange(newValue) {
   console.log('change', newValue);
@@ -12,10 +9,7 @@ function onChange(newValue) {
 class App extends Component {
   render() {
     return <div>
-      <AceEditor
-        mode="forth" theme="github" onChange={onChange}
-        name="editor" editorProps={{$blockScrolling: true}}
-      />
+      <Editor name="editor" theme="github"/>
       <div>Hello Forth</div>
     </div>
   }
