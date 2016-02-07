@@ -5,11 +5,12 @@ class ReplTextArea extends Component {
     return <textarea className="repl-textarea"
       wrap="off"
       style={{
+        opacity: 0,
         border: "none",
         height: "17px",
         width: "8px",
         left: "192px",
-        top:"34px",
+        top: "34px",
         resize: "none",
     }}/>;
   }
@@ -27,6 +28,7 @@ class ReplActiveLine extends Component {
     }}/>;
   }
 }
+
 class ReplContent extends Component {
   render() {
     return <div className="repl-content">
@@ -43,15 +45,29 @@ class ReplContent extends Component {
   }
 }
 
+class ReplCursor extends Component {
+  render() {
+    return <div className="repl-cursor"
+      style={{
+        height: "17px",
+        width: "8px",
+        left: "192px",
+        top: "34px",
+        borderLeft: "2px solid",
+    }}/>;
+  }
+}
+
 export default class Repl extends Component {
   render() {
     return <div className="repl" style={{
         fontSize: "16px",
         height: "272px",
     }}>
+      <ReplTextArea />
       <ReplActiveLine />
       <ReplContent />
-      <ReplTextArea />
+      <ReplCursor />
     </div>
   }
 }
