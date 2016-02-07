@@ -1,0 +1,15 @@
+.repl {
+  position: relative;
+  font: 12px/normal'Monaco','Menlo','Ubuntu Mono','Consolas','source-code-pro',monospace
+}
+.repl-textarea {
+  position: absolute;
+  background: transparent;
+}
+.repl-active-line {
+  position: absolute;
+  background-color: rgb(245, 245, 245);
+}
+.repl-content {
+  position: absolute;
+}

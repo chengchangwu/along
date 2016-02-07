@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import brace from 'brace'
 
-class Editor extends Component {
+export default class Editor extends Component {
   componentDidMount() {
     const {
       name, mode, theme,
@@ -21,5 +21,3 @@ class Editor extends Component {
     </div>
   }
 }
-
-export default Editor
