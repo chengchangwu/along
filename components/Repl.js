@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { PropTypes } from 'react'
 
 const ReplTextArea = () => (
   <textarea className="repl-textarea"
@@ -50,8 +50,9 @@ const ReplCursor = () => (
   }}/>
 )
 
-const Repl = () => (
-  <div className="repl" style={{
+const Repl = ({focus}) => (
+  <div className={ focus? "repl repl-focus" : "repl" }
+    style={{
       fontSize: "16px",
       height: "272px",
   }}>
@@ -61,5 +62,9 @@ const Repl = () => (
     <ReplCursor />
   </div>
 )
+
+Repl.propTypes = {
+  focus: PropTypes.bool.isRequired,
+}
 
 export default Repl

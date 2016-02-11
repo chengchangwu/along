@@ -2,19 +2,23 @@
   position: relative;
   font: 12px/normal'Monaco','Menlo','Ubuntu Mono','Consolas','source-code-pro',monospace
 }
-.repl-textarea {
+.repl .repl-textarea {
   position: absolute;
   background: transparent;
 }
-.repl-active-line {
+.repl .repl-active-line {
   position: absolute;
   background-color: rgb(245, 245, 245);
 }
-.repl-content {
+.repl.repl-focus .repl-active-line {
+  position: absolute;
+  background-color: rgb(255, 255, 204);
+}
+.repl .repl-content {
   position: absolute;
   white-space: pre;
 }
-.repl-cursor {
+.repl .repl-cursor {
   position: absolute;
   color: black;
 }

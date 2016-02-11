@@ -15,7 +15,7 @@ class App extends Component {
     return <div>
       <Editor name="editor" mode="forth" theme="github" />
       <hr/>
-      <Repl />
+      <Repl focus={true}/>
     </div>
   }
 }
