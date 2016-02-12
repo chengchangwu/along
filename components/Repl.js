@@ -1,20 +1,27 @@
 import React, { PropTypes } from 'react'
 
-const ReplTextArea = ({onChange, onKeyUp}) => (
-  <textarea className="repl-textarea"
-    wrap="off"
-    onChange={onChange}
-    onKeyUp={onKeyUp}
-    style={{
-      opacity: 0,
-      border: "none",
-      height: "17px",
-      width: "8px",
-      left: "192px",
-      top: "34px",
-      resize: "none",
-  }}/>
-)
+var ReplTextArea = React.createClass({
+    focus: function() {
+      this.textarea.focus();
+    },
+    render: function() {
+      return <textarea className="repl-textarea"
+        ref={ (c) => { this.textarea = c; }}
+        wrap="off"
+        onChange={this.props.onChange}
+        onKeyUp={this.props.onKeyUp}
+        onKeyDown={this.props.onKeyDown}
+        style={{
+          opacity: 0,
+          border: "none",
+          height: "17px",
+          width: "8px",
+          left: "192px",
+          top: "34px",
+          resize: "none",
+      }}/>;
+    }
+});
 
 const ReplActiveLine = () => (
   <div
@@ -52,19 +59,25 @@ const ReplCursor = () => (
   }}/>
 )
 
-const Repl = ({focus, onClick, onChange, onKeyUp}) => (
-  <div className={ focus? "repl repl-focus" : "repl" }
-    onClick={onClick}
-    style={{
-      fontSize: "16px",
-      height: "272px",
-  }}>
-    <ReplTextArea onChange={onChange} onKeyUp={onKeyUp} />
-    <ReplActiveLine />
-    <ReplContent />
-    <ReplCursor />
-  </div>
-)
+var Repl = React.createClass({
+  handleClick: function() {
+    this.TextArea.focus();
+  },
+  render: function() {
+    return <div className={ this.props.focus? "repl repl-focus" : "repl" }
+      onClick={ (event) => { this.handleClick (event); this.props.onClick(event); } }
+      style={{
+        fontSize: "16px",
+        height: "272px",
+    }}>
+      <ReplTextArea ref={ (c) => { this.TextArea = c; }}
+        onChange={this.props.onChange} onKeyDown={this.props.onKeyDown} onKeyUp={this.props.onKeyUp} />
+      <ReplActiveLine />
+      <ReplContent />
+      <ReplCursor />
+    </div>
+  }
+});
 
 Repl.propTypes = {
   focus: PropTypes.bool.isRequired,
