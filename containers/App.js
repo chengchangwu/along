@@ -5,10 +5,11 @@ import 'brace/mode/forth'
 import 'brace/theme/github'
 import Repl from '../components/Repl'
 import '../assets/style.css'
-import { focus } from '../actions'
+import { focus, defocus } from '../actions'
 
-const App = ({focus, onReplClick}) => (
-  <div>
+
+const App = ({focus, onReplClick, onReplClickOutside}) => (
+  <div onClick={onReplClickOutside}>
     <Editor name="editor" mode="forth" theme="github" />
     <hr/>
     <Repl focus={focus} onClick={onReplClick}/>
@@ -21,8 +22,14 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onReplClick: () => {
+    onReplClick: (event) => {
+      // Note: event.stopPropagation may not be a good solution. Google
+      // 'react click outside' for better solutions.
+      event.stopPropagation();
       dispatch(focus())
+    },
+    onReplClickOutside: (event) => {
+      dispatch(defocus())
     }
   }
 }
