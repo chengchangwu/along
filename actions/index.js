@@ -1,16 +1,32 @@
 // Actions
 export const REPL_FOCUS = 'REPL_FOCUS'
 export const REPL_DEFOCUS = 'REPL_DEFOCUS'
+export const REPL_CHANGE = 'REPL_CHANGE'
+export const REPL_KEYPRESS = 'REPL_KEYUP'
 
 // Action Creators
-export function focus() {
+export function replFocus() {
   return {
     type: REPL_FOCUS
   }
 }
 
-export function defocus() {
+export function replDefocus() {
   return {
     type: REPL_DEFOCUS
+  }
+}
+
+export function replChange(value) {
+  return {
+    type: REPL_CHANGE,
+    value: value
+  }
+}
+
+export function replKeyup(c) {
+  return {
+    type: REPL_KEYUP,
+    char: c
   }
 }

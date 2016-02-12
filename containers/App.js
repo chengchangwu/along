@@ -5,14 +5,14 @@ import 'brace/mode/forth'
 import 'brace/theme/github'
 import Repl from '../components/Repl'
 import '../assets/style.css'
-import { focus, defocus } from '../actions'
+import { replFocus, replDefocus, replChange, replKeyup } from '../actions'
 
 
-const App = ({focus, onReplClick, onReplClickOutside}) => (
+const App = ({focus, onReplClick, onReplClickOutside, onReplChange, onReplKeyUp}) => (
   <div onClick={onReplClickOutside}>
     <Editor name="editor" mode="forth" theme="github" />
     <hr/>
-    <Repl focus={focus} onClick={onReplClick}/>
+    <Repl focus={focus} onClick={onReplClick} onChange={onReplChange} onKeyUp={onReplKeyUp}/>
   </div>
 )
 
@@ -26,10 +26,17 @@ const mapDispatchToProps = (dispatch) => {
       // Note: event.stopPropagation may not be a good solution. Google
       // 'react click outside' for better solutions.
       event.stopPropagation();
-      dispatch(focus())
+      dispatch(replFocus())
     },
     onReplClickOutside: (event) => {
-      dispatch(defocus())
+      dispatch(replDefocus())
+    },
+    onReplChange: (event) => {
+      console.log('onReplChange')
+      dispatch(replChange(event.target.value))
+    },
+    onReplKeyUp: (event) => {
+      dispatch(replKeyUp(event.charCode))
     }
   }
 }

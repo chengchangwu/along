@@ -1,8 +1,10 @@
 import React, { PropTypes } from 'react'
 
-const ReplTextArea = () => (
+const ReplTextArea = ({onChange, onKeyUp}) => (
   <textarea className="repl-textarea"
     wrap="off"
+    onChange={onChange}
+    onKeyUp={onKeyUp}
     style={{
       opacity: 0,
       border: "none",
@@ -50,14 +52,14 @@ const ReplCursor = () => (
   }}/>
 )
 
-const Repl = ({focus, onClick}) => (
+const Repl = ({focus, onClick, onChange, onKeyUp}) => (
   <div className={ focus? "repl repl-focus" : "repl" }
     onClick={onClick}
     style={{
       fontSize: "16px",
       height: "272px",
   }}>
-    <ReplTextArea />
+    <ReplTextArea onChange={onChange} onKeyUp={onKeyUp} />
     <ReplActiveLine />
     <ReplContent />
     <ReplCursor />
