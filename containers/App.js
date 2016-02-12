@@ -5,23 +5,29 @@ import 'brace/mode/forth'
 import 'brace/theme/github'
 import Repl from '../components/Repl'
 import '../assets/style.css'
+import { focus } from '../actions'
 
-function onChange(newValue) {
-  console.log('change', newValue);
-}
+const App = ({focus, onReplClick}) => (
+  <div>
+    <Editor name="editor" mode="forth" theme="github" />
+    <hr/>
+    <Repl focus={focus} onClick={onReplClick}/>
+  </div>
+)
 
-class App extends Component {
-  render() {
-    return <div>
-      <Editor name="editor" mode="forth" theme="github" />
-      <hr/>
-      <Repl focus={true}/>
-    </div>
-  }
-}
-
-function select(state) {
+const mapStateToProps = (state) => {
   return state
 }
 
-export default connect(select)(App)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onReplClick: () => {
+      dispatch(focus())
+    }
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)

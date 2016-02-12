@@ -50,8 +50,9 @@ const ReplCursor = () => (
   }}/>
 )
 
-const Repl = ({focus}) => (
+const Repl = ({focus, onClick}) => (
   <div className={ focus? "repl repl-focus" : "repl" }
+    onClick={onClick}
     style={{
       fontSize: "16px",
       height: "272px",
