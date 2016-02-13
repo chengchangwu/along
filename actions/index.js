@@ -3,7 +3,6 @@ export const REPL_FOCUS = 'REPL_FOCUS'
 export const REPL_DEFOCUS = 'REPL_DEFOCUS'
 export const REPL_CHANGE = 'REPL_CHANGE'
 export const REPL_KEYDOWN = 'REPL_KEYDOWN'
-export const REPL_KEYUP = 'REPL_KEYUP'
 
 // Action Creators
 export function replFocus() {
@@ -19,7 +18,6 @@ export function replDefocus() {
 }
 
 export function replChange(value) {
-  console.log(value)
   return {
     type: REPL_CHANGE,
     value: value
@@ -31,11 +29,5 @@ export function replKeyDown(keyCode) {
   return {
     type: REPL_KEYDOWN,
     keyCode: keyCode
-  }
-}
-
-export function replKeyUp() {
-  return {
-    type: REPL_KEYUP
   }
 }

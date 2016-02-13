@@ -1,4 +1,4 @@
-import { REPL_FOCUS, REPL_DEFOCUS, REPL_CHANGE, REPL_KEYUP } from '../actions'
+import { REPL_FOCUS, REPL_DEFOCUS, REPL_CHANGE, REPL_KEYDOWN } from '../actions'
 import "babel-polyfill"
 import { combineReducers } from 'redux'
 
@@ -23,10 +23,10 @@ const REPL_UP = 1
 const REPL_DOWN = 1
 
 // State: cursor position, last line in document,
-export function key(state = {}, action) {
+export function input(state = {text: ""}, action) {
   switch (action.type) {
-    case REPL_KEYUP:
-      switch (action.char) {
+    case REPL_KEYDOWN:
+      switch (action.keyCode) {
         case REPL_BACKSPACE:
         case REPL_DEL:
         case REPL_HOME:
@@ -40,8 +40,7 @@ export function key(state = {}, action) {
           return state;
       }
     case REPL_CHANGE:
-      console.log(action.value);
-      return {input: action.value};
+      return {text: action.value};
     default:
       return state;
   }
@@ -49,7 +48,7 @@ export function key(state = {}, action) {
 
 const rootReducer = combineReducers({
   focus,
-  key
+  input
 })
 
 export default rootReducer

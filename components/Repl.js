@@ -34,7 +34,7 @@ const ReplActiveLine = () => (
   }}/>
 )
 
-const ReplContent = () => (
+const ReplContent = ({text}) => (
   <div className="repl-content">
     <div className="repl-line" style={{
       height: "17px"
@@ -44,16 +44,16 @@ const ReplContent = () => (
     }}>star *  ok</div>
     <div className="repl-line" style={{
       height: "17px"
-    }}>: stars 0 do star loop ;</div>
+    }}>{text}</div>
   </div>
 )
 
-const ReplCursor = () => (
+const ReplCursor = ({length}) => (
   <div className="repl-cursor"
     style={{
       height: "17px",
       width: "8px",
-      left: "192px",
+      left: length*8 + "px",
       top: "34px",
       borderLeft: "2px solid",
   }}/>
@@ -73,8 +73,8 @@ var Repl = React.createClass({
       <ReplTextArea ref={ (c) => { this.TextArea = c; }}
         onChange={this.props.onChange} onKeyDown={this.props.onKeyDown} onKeyUp={this.props.onKeyUp} />
       <ReplActiveLine />
-      <ReplContent />
-      <ReplCursor />
+      <ReplContent text={this.props.text}/>
+      <ReplCursor length={this.props.text.length}/>
     </div>
   }
 });
