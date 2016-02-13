@@ -1,4 +1,4 @@
-import { REPL_FOCUS, REPL_DEFOCUS, REPL_CHANGE, REPL_KEYDOWN, REPL_ENTER } from '../actions'
+import { REPL_FOCUS, REPL_DEFOCUS, REPL_CHANGE, REPL_KEYDOWN, REPL_KEYUP, REPL_ENTER } from '../actions'
 import "babel-polyfill"
 import { combineReducers } from 'redux'
 
@@ -23,38 +23,42 @@ const KEY_DOWN = 40
 const KEY_LEFT = 37
 const KEY_RIGHT = 39
 
-// State: cursor position, last line in document,
-export function input(state = {text: "", position: 0}, action) {
+export function input(state = {text: "", selectionEnd: 0, history: [], history_idx: 0}, action) {
   switch (action.type) {
     case REPL_KEYDOWN:
       switch (action.keyCode) {
-        case KEY_BACKSPACE:
-          return state;
-        case KEY_DEL:
-          let position = Math.min(state.position + 1, state.text.length);
-          return Object.assign({}, state, {position: position});
-        case KEY_HOME:
-          return Object.assign({}, state, {position: 0});
-        case KEY_END:
-          return Object.assign({}, state, {position: state.text.length});
-        case KEY_UP:
-          return state;
-        case KEY_DOWN:
-          return state;
-        case KEY_LEFT:
-          return Object.assign({}, state, {position: Math.max(state.position-1, 0)});
-        case KEY_RIGHT:
-          return Object.assign({}, state, {position: Math.min(state.position+1, state.text.length)});
+        case KEY_UP: {
+          if (state.history_idx === 0) {
+            return state;
+          } else {
+            let idx = state.history_idx - 1;
+            let text = state.history[idx];
+            return Object.assign({}, state, {text: text, history_idx: idx});
+          }
+        }
+        case KEY_DOWN: {
+          if (state.history_idx === state.history.length) {
+            return state;
+          } else {
+            let idx = state.history_idx + 1;
+            let text = (idx === state.history.length) ? "" : state.history[idx];
+            return Object.assign({}, state, {text: text, history_idx: idx});
+          }
+        }
         default:
           // insert char
           return state;
       }
-    case REPL_CHANGE:
-      let position = state.position + action.value.length - state.text.length
-      return Object.assign({}, state, {text: action.value, position: position});
-    case REPL_ENTER:
+    case REPL_KEYUP:
+      return Object.assign({}, state, {selectionEnd: action.selectionEnd});
+    case REPL_CHANGE: {
+      return Object.assign({}, state, {text: action.value, history_idx: state.history.length});
+    }
+    case REPL_ENTER: {
+      let history = [...state.history, state.text];
       console.log("Enter " + state.text)
-      return state;
+      return Object.assign({}, state, {text: "", history: history, history_idx: history.length});
+    }
     default:
       return state;
   }

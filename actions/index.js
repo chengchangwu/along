@@ -3,6 +3,7 @@ export const REPL_FOCUS = 'REPL_FOCUS'
 export const REPL_DEFOCUS = 'REPL_DEFOCUS'
 export const REPL_CHANGE = 'REPL_CHANGE'
 export const REPL_KEYDOWN = 'REPL_KEYDOWN'
+export const REPL_KEYUP = 'REPL_KEYUP'
 export const REPL_ENTER = 'REPL_ENTER'
 
 // Action Creators
@@ -26,10 +27,16 @@ export function replChange(value) {
 }
 
 export function replKeyDown(keyCode) {
-  console.log("keydown: " + keyCode)
   return {
     type: REPL_KEYDOWN,
     keyCode: keyCode
+  }
+}
+
+export function replKeyUp(selectionEnd) {
+  return {
+    type: REPL_KEYUP,
+    selectionEnd: selectionEnd,
   }
 }
 

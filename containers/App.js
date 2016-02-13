@@ -5,19 +5,19 @@ import 'brace/mode/forth'
 import 'brace/theme/github'
 import Repl from '../components/Repl'
 import '../assets/style.css'
-import { replFocus, replDefocus, replChange, replKeyDown, replEnter } from '../actions'
+import { replFocus, replDefocus, replChange, replKeyDown, replKeyUp, replEnter } from '../actions'
 
 
 const App = ({
   input, focus, onReplClick, onReplClickOutside,
-  onReplChange, onReplKeyDown, onReplEnter
+  onReplChange, onReplKeyDown, onReplKeyUp, onReplEnter
 }) => (
   <div onClick={onReplClickOutside}>
     <Editor name="editor" mode="forth" theme="github" />
     <hr/>
     <Repl input={input} focus={focus.focus}
       onClick={onReplClick} onChange={onReplChange} onKeyDown={onReplKeyDown}
-      onEnter={onReplEnter} />
+      onKeyUp={onReplKeyUp} onEnter={onReplEnter} />
   </div>
 )
 
@@ -41,6 +41,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     onReplKeyDown: (event) => {
       dispatch(replKeyDown(event.keyCode))
+    },
+    onReplKeyUp: (selectionEnd) => {
+      dispatch(replKeyUp(selectionEnd))
     },
     onReplEnter: () => {
       dispatch(replEnter())

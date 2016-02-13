@@ -20,6 +20,9 @@ var ReplTextArea = React.createClass({
         this.props.onEnter()
       }
     },
+    handleKeyUp: function() {
+      this.props.onKeyUp(this.textarea.selectionEnd)
+    },
     render: function() {
       return <textarea className="repl-textarea"
         ref={ (c) => { this.textarea = c; }}
@@ -27,50 +30,51 @@ var ReplTextArea = React.createClass({
         onChange={this.props.onChange}
         onKeyDown={this.props.onKeyDown}
         onKeyPress={this.handleKeyPress}
+        onKeyUp={this.handleKeyUp}
+        value={this.props.text}
         style={{
           opacity: 0,
           border: "none",
           height: "17px",
           width: "8px",
           left: "192px",
-          top: "34px",
+          top: this.props.y * 17 + "px",
           resize: "none",
       }}/>;
     }
 });
 
-const ReplActiveLine = () => (
+const ReplActiveLine = ({y}) => (
   <div
     className="repl-active-line"
     style={{
       height: "17px",
-      top: "34px",
+      top: y * 17 + "px",
       left: "0",
       right: "0",
   }}/>
 )
 
-const ReplContent = ({text}) => (
+const ReplContent = ({text, history}) => (
   <div className="repl-content">
-    <div className="repl-line" style={{
-      height: "17px"
-    }}>: star 42 emit ;  ok</div>
-    <div className="repl-line" style={{
-      height: "17px"
-    }}>star *  ok</div>
+    {history.map((x) => (
+      <div className="repl-line" key={x.id} style={{
+        height: "17px"
+      }}>{x}</div>
+    ))}
     <div className="repl-line" style={{
       height: "17px"
     }}>{text}</div>
   </div>
 )
 
-const ReplCursor = ({x}) => (
+const ReplCursor = ({x, y}) => (
   <div className="repl-cursor"
     style={{
       height: "17px",
       width: "8px",
       left: x + "px",
-      top: "34px",
+      top: y * 17 + "px",
       borderLeft: "2px solid",
   }}/>
 )
@@ -80,17 +84,19 @@ var Repl = React.createClass({
     this.TextArea.focus();
   },
   render: function() {
+    let y = this.props.input.history.length;
     return <div className={ this.props.focus? "repl repl-focus" : "repl" }
       onClick={ (event) => { this.handleClick (event); this.props.onClick(event); } }
       style={{
         fontSize: "16px",
         height: "272px",
     }}>
-      <ReplTextArea ref={ (c) => { this.TextArea = c; }}
-        onChange={this.props.onChange} onKeyDown={this.props.onKeyDown} onEnter={this.props.onEnter} />
-      <ReplActiveLine />
-      <ReplContent text={this.props.input.text}/>
-      <ReplCursor x={getTextWidth(this.props.input.text.substring(0, this.props.input.position))}/>
+      <ReplTextArea ref={ (c) => { this.TextArea = c; }} y={y} text={this.props.input.text}
+        onChange={this.props.onChange} onKeyDown={this.props.onKeyDown}
+        onKeyUp={this.props.onKeyUp} onEnter={this.props.onEnter} />
+      <ReplActiveLine y={y} />
+      <ReplContent text={this.props.input.text} history={this.props.input.history} />
+      <ReplCursor x={getTextWidth(this.props.input.text.substring(0, this.props.input.selectionEnd))} y={y} />
     </div>
   }
 });
