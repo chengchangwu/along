@@ -10,14 +10,14 @@ import { replFocus, replDefocus, replChange, replKeyDown, replEnter } from '../a
 
 const App = ({
   input, focus, onReplClick, onReplClickOutside,
-  onReplChange, onReplKeyDown, onEnter
+  onReplChange, onReplKeyDown, onReplEnter
 }) => (
   <div onClick={onReplClickOutside}>
     <Editor name="editor" mode="forth" theme="github" />
     <hr/>
-    <Repl text={input.text} focus={focus.focus}
+    <Repl input={input} focus={focus.focus}
       onClick={onReplClick} onChange={onReplChange} onKeyDown={onReplKeyDown}
-      onEnter={onEnter} />
+      onEnter={onReplEnter} />
   </div>
 )
 
@@ -42,7 +42,7 @@ const mapDispatchToProps = (dispatch) => {
     onReplKeyDown: (event) => {
       dispatch(replKeyDown(event.keyCode))
     },
-    onEnter: () => {
+    onReplEnter: () => {
       dispatch(replEnter())
     }
   }

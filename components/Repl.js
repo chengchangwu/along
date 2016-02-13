@@ -25,7 +25,6 @@ var ReplTextArea = React.createClass({
         ref={ (c) => { this.textarea = c; }}
         wrap="off"
         onChange={this.props.onChange}
-        onKeyUp={this.props.onKeyUp}
         onKeyDown={this.props.onKeyDown}
         onKeyPress={this.handleKeyPress}
         style={{
@@ -88,10 +87,10 @@ var Repl = React.createClass({
         height: "272px",
     }}>
       <ReplTextArea ref={ (c) => { this.TextArea = c; }}
-        onChange={this.props.onChange} onKeyDown={this.props.onKeyDown} onKeyUp={this.props.onKeyUp} onEnter={this.props.onEnter} />
+        onChange={this.props.onChange} onKeyDown={this.props.onKeyDown} onEnter={this.props.onEnter} />
       <ReplActiveLine />
-      <ReplContent text={this.props.text}/>
-      <ReplCursor x={getTextWidth(this.props.text)}/>
+      <ReplContent text={this.props.input.text}/>
+      <ReplCursor x={getTextWidth(this.props.input.text.substring(0, this.props.input.position))}/>
     </div>
   }
 });
