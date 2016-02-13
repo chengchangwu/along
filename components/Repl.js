@@ -1,5 +1,14 @@
 import React, { PropTypes } from 'react'
 
+function getTextWidth(text) {
+    // re-use canvas object for better performance
+    var canvas = getTextWidth.canvas || (getTextWidth.canvas = document.createElement("canvas"));
+    var context = canvas.getContext("2d");
+    context.font = "16px/normal'Monaco','Menlo','Ubuntu Mono','Consolas','source-code-pro',monospace";
+    var metrics = context.measureText(text);
+    return metrics.width;
+};
+
 var ReplTextArea = React.createClass({
     focus: function() {
       this.textarea.focus();
@@ -48,12 +57,12 @@ const ReplContent = ({text}) => (
   </div>
 )
 
-const ReplCursor = ({length}) => (
+const ReplCursor = ({x}) => (
   <div className="repl-cursor"
     style={{
       height: "17px",
       width: "8px",
-      left: length*8 + "px",
+      left: x + "px",
       top: "34px",
       borderLeft: "2px solid",
   }}/>
@@ -74,7 +83,7 @@ var Repl = React.createClass({
         onChange={this.props.onChange} onKeyDown={this.props.onKeyDown} onKeyUp={this.props.onKeyUp} />
       <ReplActiveLine />
       <ReplContent text={this.props.text}/>
-      <ReplCursor length={this.props.text.length}/>
+      <ReplCursor x={getTextWidth(this.props.text)}/>
     </div>
   }
 });
