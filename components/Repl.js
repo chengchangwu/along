@@ -11,7 +11,14 @@ function getTextWidth(text) {
 
 var ReplTextArea = React.createClass({
     focus: function() {
-      this.textarea.focus();
+      this.textarea.focus()
+    },
+    handleKeyPress: function(event) {
+      let key=event.charCode || event.keyCode || 0;
+      if (key === 13) {
+        event.preventDefault()
+        this.props.onEnter()
+      }
     },
     render: function() {
       return <textarea className="repl-textarea"
@@ -20,6 +27,7 @@ var ReplTextArea = React.createClass({
         onChange={this.props.onChange}
         onKeyUp={this.props.onKeyUp}
         onKeyDown={this.props.onKeyDown}
+        onKeyPress={this.handleKeyPress}
         style={{
           opacity: 0,
           border: "none",
@@ -80,7 +88,7 @@ var Repl = React.createClass({
         height: "272px",
     }}>
       <ReplTextArea ref={ (c) => { this.TextArea = c; }}
-        onChange={this.props.onChange} onKeyDown={this.props.onKeyDown} onKeyUp={this.props.onKeyUp} />
+        onChange={this.props.onChange} onKeyDown={this.props.onKeyDown} onKeyUp={this.props.onKeyUp} onEnter={this.props.onEnter} />
       <ReplActiveLine />
       <ReplContent text={this.props.text}/>
       <ReplCursor x={getTextWidth(this.props.text)}/>

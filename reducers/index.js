@@ -1,4 +1,4 @@
-import { REPL_FOCUS, REPL_DEFOCUS, REPL_CHANGE, REPL_KEYDOWN } from '../actions'
+import { REPL_FOCUS, REPL_DEFOCUS, REPL_CHANGE, REPL_KEYDOWN, REPL_ENTER } from '../actions'
 import "babel-polyfill"
 import { combineReducers } from 'redux'
 
@@ -14,33 +14,33 @@ export function focus(state = {focus: false}, action) {
   }
 }
 
-const REPL_BACKSPACE = 1
-const REPL_DEL = 1
-const REPL_ENTER = 1
-const REPL_HOME = 1
-const REPL_END = 1
-const REPL_UP = 1
-const REPL_DOWN = 1
+const KEY_BACKSPACE = 8
+const KEY_DEL = 46
+const KEY_HOME = 36
+const KEY_END = 35
+const KEY_UP = 38
+const KEY_DOWN = 40
 
 // State: cursor position, last line in document,
 export function input(state = {text: ""}, action) {
   switch (action.type) {
     case REPL_KEYDOWN:
       switch (action.keyCode) {
-        case REPL_BACKSPACE:
-        case REPL_DEL:
-        case REPL_HOME:
-        case REPL_END:
-        case REPL_ENTER:
-        case REPL_UP:
-        case REPL_DOWN:
+        case KEY_BACKSPACE:
+        case KEY_DEL:
+        case KEY_HOME:
+        case KEY_END:
+        case KEY_UP:
+        case KEY_DOWN:
         default:
           // insert char
-          console.log(action.char)
           return state;
       }
     case REPL_CHANGE:
       return {text: action.value};
+    case REPL_ENTER:
+      console.log("Enter " + state.text)
+      return state;
     default:
       return state;
   }
