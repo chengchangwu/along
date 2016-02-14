@@ -14,14 +14,8 @@ export function focus(state = {focus: false}, action) {
   }
 }
 
-const KEY_BACKSPACE = 8
-const KEY_DEL = 46
-const KEY_HOME = 36
-const KEY_END = 35
 const KEY_UP = 38
 const KEY_DOWN = 40
-const KEY_LEFT = 37
-const KEY_RIGHT = 39
 
 export function input(state = {text: "", cursorX: 0, history: [], history_idx: 0}, action) {
   switch (action.type) {
@@ -46,16 +40,14 @@ export function input(state = {text: "", cursorX: 0, history: [], history_idx: 0
           }
         }
         default:
-          // insert char
           return state;
       }
     case REPL_KEYUP:
       return Object.assign({}, state, {cursorX: action.cursorX});
-    case REPL_CHANGE: {
-      return Object.assign({}, state, {text: action.value, history_idx: state.history.length});
-    }
+    case REPL_CHANGE:
+      return Object.assign({}, state, {text: action.value, cursorX: action.cursorX, history_idx: state.history.length});
     case REPL_ENTER: {
-      let history = [...state.history, state.text];
+      let history = [...state.history, state.text]
       console.log("Enter " + state.text)
       return Object.assign({}, state, {text: "", history: history, history_idx: history.length});
     }

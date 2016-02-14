@@ -19,9 +19,10 @@ export function replDefocus() {
   }
 }
 
-export function replChange(value) {
+export function replChange(value, cursorX) {
   return {
     type: REPL_CHANGE,
+    cursorX: cursorX,
     value: value
   }
 }

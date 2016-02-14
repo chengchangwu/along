@@ -36,11 +36,11 @@ const mapDispatchToProps = (dispatch) => {
     onReplClickOutside: () => {
       dispatch(replDefocus())
     },
-    onReplChange: (event) => {
-      dispatch(replChange(event.target.value))
+    onReplChange: (value, cursorX) => {
+      dispatch(replChange(value, cursorX))
     },
-    onReplKeyDown: (event) => {
-      dispatch(replKeyDown(event.keyCode))
+    onReplKeyDown: (keyCode) => {
+      dispatch(replKeyDown(keyCode))
     },
     onReplKeyUp: (cursorX) => {
       dispatch(replKeyUp(cursorX))
