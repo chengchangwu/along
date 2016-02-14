@@ -42,8 +42,8 @@ const mapDispatchToProps = (dispatch) => {
     onReplKeyDown: (event) => {
       dispatch(replKeyDown(event.keyCode))
     },
-    onReplKeyUp: (selectionEnd) => {
-      dispatch(replKeyUp(selectionEnd))
+    onReplKeyUp: (cursorX) => {
+      dispatch(replKeyUp(cursorX))
     },
     onReplEnter: () => {
       dispatch(replEnter())

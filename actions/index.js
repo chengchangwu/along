@@ -33,10 +33,10 @@ export function replKeyDown(keyCode) {
   }
 }
 
-export function replKeyUp(selectionEnd) {
+export function replKeyUp(cursorX) {
   return {
     type: REPL_KEYUP,
-    selectionEnd: selectionEnd,
+    cursorX: cursorX,
   }
 }
 

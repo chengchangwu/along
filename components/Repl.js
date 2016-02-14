@@ -21,7 +21,8 @@ var ReplTextArea = React.createClass({
       }
     },
     handleKeyUp: function() {
-      this.props.onKeyUp(this.textarea.selectionEnd)
+      let cursorX = getTextWidth(this.textarea.value.substring(0, this.textarea.selectionEnd))
+      this.props.onKeyUp(cursorX)
     },
     render: function() {
       return <textarea className="repl-textarea"
@@ -96,7 +97,7 @@ var Repl = React.createClass({
         onKeyUp={this.props.onKeyUp} onEnter={this.props.onEnter} />
       <ReplActiveLine y={y} />
       <ReplContent text={this.props.input.text} history={this.props.input.history} />
-      <ReplCursor x={getTextWidth(this.props.input.text.substring(0, this.props.input.selectionEnd))} y={y} />
+      <ReplCursor x={this.props.input.cursorX} y={y} />
     </div>
   }
 });

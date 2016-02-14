@@ -23,7 +23,7 @@ const KEY_DOWN = 40
 const KEY_LEFT = 37
 const KEY_RIGHT = 39
 
-export function input(state = {text: "", selectionEnd: 0, history: [], history_idx: 0}, action) {
+export function input(state = {text: "", cursorX: 0, history: [], history_idx: 0}, action) {
   switch (action.type) {
     case REPL_KEYDOWN:
       switch (action.keyCode) {
@@ -50,7 +50,7 @@ export function input(state = {text: "", selectionEnd: 0, history: [], history_i
           return state;
       }
     case REPL_KEYUP:
-      return Object.assign({}, state, {selectionEnd: action.selectionEnd});
+      return Object.assign({}, state, {cursorX: action.cursorX});
     case REPL_CHANGE: {
       return Object.assign({}, state, {text: action.value, history_idx: state.history.length});
     }
