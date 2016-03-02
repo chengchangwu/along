@@ -19,8 +19,8 @@ use rtforth::float::Float;
 
 struct Server {
     out: ws::Sender,
-    tx: Rc<spsc::Producer<Message>>,
-    rx: Rc<spsc::Consumer<Message>>,
+    tx: Rc<spsc::Producer<String>>,
+    rx: Rc<spsc::Consumer<String>>,
     count: Rc<Cell<usize>>,
 }
 
@@ -34,7 +34,11 @@ impl Handler for Server {
 
     fn on_message(&mut self, msg: Message) -> Result<()> {
         // TODO: watchdog
-        let mut cmd = msg;
+        let mut cmd;
+        match msg {
+          Message::Text(text) => { cmd = text; },
+          _ => unreachable!(),
+        }
         loop {
             match self.tx.try_push(cmd) {
                 None => break,
@@ -48,7 +52,7 @@ impl Handler for Server {
         loop {
             match self.rx.try_pop() {
                 Some(rsp) => {
-                    self.out.send(rsp);
+                    self.out.send(Message::Text(rsp));
                     break;
                 },
                 None => thread::sleep_ms(5),
@@ -78,8 +82,8 @@ impl Handler for Server {
 }
 
 fn forth_thread(
-  forth_rx: &spsc::Consumer<Message>,
-  forth_tx: &spsc::Producer<Message>
+  forth_rx: &spsc::Consumer<String>,
+  forth_tx: &spsc::Producer<String>
 ) {
   let vm = &mut VM::new(65536);
   vm.add_core();
@@ -92,23 +96,22 @@ fn forth_thread(
   vm.state().auto_flush = false;
   loop {
     match forth_rx.pop() {
-      Message::Text(text) => {
+      text => {
         vm.set_source(&text);
         match vm.evaluate() {
           Some(e) => {
             println!("Error {:?}", e);
-            forth_tx.push(Message::Text("err".to_string()));
+            forth_tx.push("err".to_string());
           },
           None => {
             let mut buf = vm.output_buffer().take().unwrap();
             writeln!(buf, " ok");
-            forth_tx.push(Message::Text(buf.clone()));
+            forth_tx.push(buf.clone());
             buf.clear();
             vm.set_output_buffer(buf);
           }
         }
-      },
-      _ => {}
+      }
     }
   }
 }
