@@ -1,4 +1,4 @@
-// Actions
+// Actions for Repl
 export const REPL_FOCUS = 'REPL_FOCUS'
 export const REPL_DEFOCUS = 'REPL_DEFOCUS'
 export const REPL_CHANGE = 'REPL_CHANGE'
@@ -44,5 +44,22 @@ export function replKeyUp(cursorX) {
 export function replEnter() {
   return {
     type: REPL_ENTER
+  }
+}
+
+// Actions for Connection
+export const WS_CONNECTING = 'WS_CONNECTING'
+export const WS_SET_URL = 'WS_SET_URL'
+
+export function connectUrl() {
+  return {
+    type: WS_CONNECTING,
+  }
+}
+
+export function setUrl(url) {
+  return {
+    type: WS_SET_URL,
+    url: url
   }
 }

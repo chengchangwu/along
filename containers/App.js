@@ -3,17 +3,23 @@ import { connect } from 'react-redux'
 import Editor from '../components/Editor'
 import 'brace/mode/forth'
 import 'brace/theme/github'
+import Connection from '../components/Connection'
 import Repl from '../components/Repl'
 import '../assets/style.css'
-import { replFocus, replDefocus, replChange, replKeyDown, replKeyUp, replEnter } from '../actions'
+import { replFocus, replDefocus, replChange, replKeyDown, replKeyUp, replEnter,
+  connectUrl, setUrl } from '../actions'
 
 
 const App = ({
   input, focus, onReplClick, onReplClickOutside,
-  onReplChange, onReplKeyDown, onReplKeyUp, onReplEnter
+  onReplChange, onReplKeyDown, onReplKeyUp, onReplEnter,
+  connection, onConnect, setUrl
 }) => (
   <div onClick={onReplClickOutside}>
     <Editor name="editor" mode="forth" theme="github" />
+    <hr/>
+    <Connection connection={connection}
+      onClick={onConnect} onChange={setUrl}/>
     <hr/>
     <Repl input={input} focus={focus.focus}
       onClick={onReplClick} onChange={onReplChange} onKeyDown={onReplKeyDown}
@@ -22,6 +28,7 @@ const App = ({
 )
 
 const mapStateToProps = (state) => {
+  console.log(state);
   return state
 }
 
@@ -47,6 +54,12 @@ const mapDispatchToProps = (dispatch) => {
     },
     onReplEnter: () => {
       dispatch(replEnter())
+    },
+    onConnect: () => {
+      dispatch(connectUrl())
+    },
+    setUrl: (url) => {
+      dispatch(setUrl(url))
     }
   }
 }

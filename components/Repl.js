@@ -109,6 +109,12 @@ var Repl = React.createClass({
 
 Repl.propTypes = {
   focus: PropTypes.bool.isRequired,
+  input: PropTypes.object.isRequired,
+  onChange: PropTypes.func.isRequired,
+  onKeyUp: PropTypes.func.isRequired,
+  onKeyDown: PropTypes.func.isRequired,
+  onClick: PropTypes.func.isRequired,
+  onEnter: PropTypes.func.isRequired
 }
 
 export default Repl

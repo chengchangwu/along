@@ -1,4 +1,7 @@
-import { REPL_FOCUS, REPL_DEFOCUS, REPL_CHANGE, REPL_KEYDOWN, REPL_KEYUP, REPL_ENTER } from '../actions'
+import {
+  REPL_FOCUS, REPL_DEFOCUS,
+  REPL_CHANGE, REPL_KEYDOWN, REPL_KEYUP, REPL_ENTER,
+  WS_CONNECTING, WS_SET_URL } from '../actions'
 import "babel-polyfill"
 import { combineReducers } from 'redux'
 
@@ -56,9 +59,24 @@ export function input(state = {text: "", cursorX: 0, history: [], history_idx: 0
   }
 }
 
+const IDLE = 0;
+const CONNECTING = 1;
+
+export function connection(state = {url: "ws://127.0.0.1:3012", status: IDLE}, action) {
+  switch (action.type) {
+    case WS_CONNECTING:
+      return Object.assign({}, state, {status: CONNECTING});
+    case WS_SET_URL:
+      return Object.assign({}, state, {url: action.url});
+    default:
+      return state;
+  }
+}
+
 const rootReducer = combineReducers({
   focus,
-  input
+  input,
+  connection
 })
 
 export default rootReducer

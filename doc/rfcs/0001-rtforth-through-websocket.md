@@ -22,28 +22,28 @@ use cases:
 
 Redux actions for connection:
 
-* WsConnecting
-* WsOpen
-* WsClosing
-* WsClosed
+* `WS_CONNECTING`
+* `WS_OPEN`
+* `WS_CLOSING`
+* `WS_CLOSED`
 
 Redux actions for communication:
 
-* WsSending
-* WsReceived
+* `WS_SENDING`
+* `WS_RECEIVED`
 
-A new component WsURL for URL input and Websocket connection should be designed.
-The websocket connection created is kept in redux store.
+A new component `Connection` should be designed for URL input and Websocket connection.
+The websocket connection created is kept in the redux store.
 
-Component Repl get the Websocket connection from the store, sends input to rtForth
+Component `Repl` get the Websocket connection from the store, sends input to rtForth
 only if the connection is open.
 
 Store content:
     {
       connection: {
-        url: "127.0.0.1:3012",
+        url: "ws://127.0.0.1:3012",
         ws: null,
-        status: 0 // 0 for idle; 1 for Sending; 2 for Received;
+        status: 0 // 0 for idle; 1 for connecting, 2 for sending; 3 for received;
         message: "" // message sent or received
       }
     }
