@@ -1,6 +1,9 @@
 import React, { PropTypes } from 'react'
 
 var Connection = React.createClass({
+  handleConnect: function() {
+    this.props.onConnect(this.props.connection.url);
+  },
   handleChange: function() {
     this.props.onChange(this.input.value);
   },
@@ -12,14 +15,14 @@ var Connection = React.createClass({
         value={this.props.connection.url}
         onChange={this.handleChange}
       ></input>
-      <button onClick={this.props.onClick}>Connect</button>
+      <button onClick={this.handleConnect}>Connect</button>
     </div>;
   }
 });
 
 Connection.propTypes = {
   connection: PropTypes.object.isRequired,
-  onClick: PropTypes.func.isRequired,
+  onConnect: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired
 }
 

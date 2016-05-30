@@ -1,11 +1,15 @@
 import {
   REPL_FOCUS, REPL_DEFOCUS,
   REPL_CHANGE, REPL_KEYDOWN, REPL_KEYUP, REPL_ENTER,
-  WS_CONNECTING, WS_SET_URL } from '../actions'
+  WS_CONNECT, WS_SET_URL } from '../actions'
 import "babel-polyfill"
 import { combineReducers } from 'redux'
 
-// Reducers
+/**
+  @module Reducers REPL
+*/
+
+/** Focus reducer */
 export function focus(state = {focus: false}, action) {
   switch (action.type) {
     case REPL_FOCUS:
@@ -20,6 +24,7 @@ export function focus(state = {focus: false}, action) {
 const KEY_UP = 38
 const KEY_DOWN = 40
 
+/** Input reducer */
 export function input(state = {text: "", cursorX: 0, history: [], history_idx: 0}, action) {
   switch (action.type) {
     case REPL_KEYDOWN:
@@ -59,13 +64,15 @@ export function input(state = {text: "", cursorX: 0, history: [], history_idx: 0
   }
 }
 
-const IDLE = 0;
-const CONNECTING = 1;
+/**
+  @module Reducers Websocket
+*/
 
-export function connection(state = {url: "ws://127.0.0.1:3012", status: IDLE}, action) {
+/** Connection reducer */
+export function connection(state = {url: "ws://127.0.0.1:3012", socket: null}, action) {
   switch (action.type) {
-    case WS_CONNECTING:
-      return Object.assign({}, state, {status: CONNECTING});
+    case WS_CONNECT:
+      return Object.assign({}, state, {socket: action.socket});
     case WS_SET_URL:
       return Object.assign({}, state, {url: action.url});
     default:

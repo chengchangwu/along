@@ -7,7 +7,7 @@ import Connection from '../components/Connection'
 import Repl from '../components/Repl'
 import '../assets/style.css'
 import { replFocus, replDefocus, replChange, replKeyDown, replKeyUp, replEnter,
-  connectUrl, setUrl } from '../actions'
+  connectWs, setUrl } from '../actions'
 
 
 const App = ({
@@ -19,7 +19,7 @@ const App = ({
     <Editor name="editor" mode="forth" theme="github" />
     <hr/>
     <Connection connection={connection}
-      onClick={onConnect} onChange={setUrl}/>
+      onConnect={onConnect} onChange={setUrl}/>
     <hr/>
     <Repl input={input} focus={focus.focus}
       onClick={onReplClick} onChange={onReplChange} onKeyDown={onReplKeyDown}
@@ -55,8 +55,9 @@ const mapDispatchToProps = (dispatch) => {
     onReplEnter: () => {
       dispatch(replEnter())
     },
-    onConnect: () => {
-      dispatch(connectUrl())
+    onConnect: (url) => {
+      var socket = new WebSocket(url);
+      dispatch(connectWs(socket))
     },
     setUrl: (url) => {
       dispatch(setUrl(url))
