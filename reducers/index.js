@@ -70,7 +70,7 @@ export function output(state = {history: []}, action) {
   console.log(action);
   switch(action.type) {
     case REPL_OUTPUT:
-      let history = [...state.history, action.text];
+      let history = [...state.history, ...action.text.split('\n')];
       return Object.assign({}, state, {history: history});
     default:
       return state;
