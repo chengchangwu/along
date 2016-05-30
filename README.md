@@ -5,6 +5,12 @@ A Web-based IDE for all Forths implementing [along.f](doc/along.f.md).
     ./node_modules/.bin/webpack --progress --colors --watch
     ./node_modules/.bin/electron .
 
+## API
+
+Run the following script to generate API document under dist/jsdoc.
+
+    npm run doc
+
 ## Frameworks
 
 Along is based on electron, ace, react and redux frameworks.
