@@ -15,6 +15,8 @@ export const REPL_KEYDOWN = 'REPL_KEYDOWN'
 export const REPL_KEYUP = 'REPL_KEYUP'
 /** Action */
 export const REPL_ENTER = 'REPL_ENTER'
+/** Action */
+export const REPL_OUTPUT = 'REPL_OUTPUT'
 
 /** Action creator */
 export function replFocus() {
@@ -59,6 +61,14 @@ export function replKeyUp(cursorX) {
 export function replEnter() {
   return {
     type: REPL_ENTER
+  }
+}
+
+/** Action creator */
+export function replOutput(text) {
+  return {
+    type: REPL_OUTPUT,
+    text: text
   }
 }
 

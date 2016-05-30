@@ -7,13 +7,18 @@ import Connection from '../components/Connection'
 import Repl from '../components/Repl'
 import '../assets/style.css'
 import { replFocus, replDefocus, replChange, replKeyDown, replKeyUp, replEnter,
+  replOutput,
   connectWs, setUrl } from '../actions'
 
 
 var App = React.createClass({
   handleReplEnter: function(text) {
     this.props.onReplEnter();
-    this.props.connection.socket.send(this.props.input.text);
+    this.props.onReplOutput(this.props.input.text);
+    var socket = this.props.connection.socket;
+    if((socket != null) && (socket.readyState == WebSocket.OPEN)) {
+      socket.send(this.props.input.text);
+    }
   },
   render: function() {
     return(
@@ -23,7 +28,7 @@ var App = React.createClass({
         <Connection connection={this.props.connection}
           onConnect={this.props.onConnect} onChange={this.props.setUrl}/>
         <hr/>
-        <Repl input={this.props.input} focus={this.props.focus.focus}
+        <Repl input={this.props.input} output={this.props.output} focus={this.props.focus.focus}
           onClick={this.props.onReplClick} onChange={this.props.onReplChange}
           onKeyDown={this.props.onReplKeyDown}
           onKeyUp={this.props.onReplKeyUp} onEnter={this.handleReplEnter} />
@@ -60,13 +65,16 @@ const mapDispatchToProps = (dispatch) => {
     onReplEnter: () => {
       dispatch(replEnter());
     },
+    onReplOutput: (text) => {
+      dispatch(replOutput(text));
+    },
     onConnect: (url) => {
       var socket = new WebSocket(url);
       socket.onopen = function(ev) {};
       socket.onclose = function(ev) {};
       socket.onerror = function(ev) {};
       socket.onmessage = function(ev) {
-        console.log("Message: " + ev.data);
+        dispatch(replOutput(ev.data));
       };
       dispatch(connectWs(socket))
     },

@@ -90,7 +90,7 @@ var Repl = React.createClass({
     this.TextArea.focus();
   },
   render: function() {
-    let y = this.props.input.history.length;
+    let y = this.props.output.history.length;
     return <div className={ this.props.focus? "repl repl-focus" : "repl" }
       onClick={ (event) => { this.handleClick (event); this.props.onClick(event); } }
       style={{
@@ -101,7 +101,7 @@ var Repl = React.createClass({
         onChange={this.props.onChange} onKeyDown={this.props.onKeyDown}
         onKeyUp={this.props.onKeyUp} onEnter={this.props.onEnter} />
       <ReplActiveLine y={y} />
-      <ReplContent text={this.props.input.text} history={this.props.input.history} />
+      <ReplContent text={this.props.input.text} history={this.props.output.history} />
       <ReplCursor x={getTextWidth(this.props.input.text.substring(0, this.props.input.cursorX))} y={y} />
     </div>
   }
@@ -110,6 +110,7 @@ var Repl = React.createClass({
 Repl.propTypes = {
   focus: PropTypes.bool.isRequired,
   input: PropTypes.object.isRequired,
+  output: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
   onKeyUp: PropTypes.func.isRequired,
   onKeyDown: PropTypes.func.isRequired,

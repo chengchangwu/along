@@ -1,6 +1,7 @@
 import {
   REPL_FOCUS, REPL_DEFOCUS,
   REPL_CHANGE, REPL_KEYDOWN, REPL_KEYUP, REPL_ENTER,
+  REPL_OUTPUT,
   WS_CONNECT, WS_SET_URL } from '../actions'
 import "babel-polyfill"
 import { combineReducers } from 'redux'
@@ -64,6 +65,18 @@ export function input(state = {text: "", cursorX: 0, history: [], history_idx: 0
   }
 }
 
+/** Output reducer */
+export function output(state = {history: []}, action) {
+  console.log(action);
+  switch(action.type) {
+    case REPL_OUTPUT:
+      let history = [...state.history, action.text];
+      return Object.assign({}, state, {history: history});
+    default:
+      return state;
+  }
+}
+
 /**
   @module Reducers Websocket
 */
@@ -83,6 +96,7 @@ export function connection(state = {url: "ws://127.0.0.1:3012", socket: null}, a
 const rootReducer = combineReducers({
   focus,
   input,
+  output,
   connection
 })
 
