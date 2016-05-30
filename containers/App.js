@@ -10,22 +10,27 @@ import { replFocus, replDefocus, replChange, replKeyDown, replKeyUp, replEnter,
   connectWs, setUrl } from '../actions'
 
 
-const App = ({
-  input, focus, onReplClick, onReplClickOutside,
-  onReplChange, onReplKeyDown, onReplKeyUp, onReplEnter,
-  connection, onConnect, setUrl
-}) => (
-  <div onClick={onReplClickOutside}>
-    <Editor name="editor" mode="forth" theme="github" />
-    <hr/>
-    <Connection connection={connection}
-      onConnect={onConnect} onChange={setUrl}/>
-    <hr/>
-    <Repl input={input} focus={focus.focus}
-      onClick={onReplClick} onChange={onReplChange} onKeyDown={onReplKeyDown}
-      onKeyUp={onReplKeyUp} onEnter={onReplEnter} />
-  </div>
-)
+var App = React.createClass({
+  handleReplEnter: function(text) {
+    this.props.onReplEnter();
+    this.props.connection.socket.send(this.props.input.text);
+  },
+  render: function() {
+    return(
+      <div onClick={this.props.onReplClickOutside}>
+        <Editor name="editor" mode="forth" theme="github" />
+        <hr/>
+        <Connection connection={this.props.connection}
+          onConnect={this.props.onConnect} onChange={this.props.setUrl}/>
+        <hr/>
+        <Repl input={this.props.input} focus={this.props.focus.focus}
+          onClick={this.props.onReplClick} onChange={this.props.onReplChange}
+          onKeyDown={this.props.onReplKeyDown}
+          onKeyUp={this.props.onReplKeyUp} onEnter={this.handleReplEnter} />
+      </div>
+    );
+  }
+});
 
 const mapStateToProps = (state) => {
   console.log(state);
@@ -53,10 +58,16 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(replKeyUp(cursorX))
     },
     onReplEnter: () => {
-      dispatch(replEnter())
+      dispatch(replEnter());
     },
     onConnect: (url) => {
       var socket = new WebSocket(url);
+      socket.onopen = function(ev) {};
+      socket.onclose = function(ev) {};
+      socket.onerror = function(ev) {};
+      socket.onmessage = function(ev) {
+        console.log("Message: " + ev.data);
+      };
       dispatch(connectWs(socket))
     },
     setUrl: (url) => {
