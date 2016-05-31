@@ -2,6 +2,7 @@
 A Web-based IDE for all Forths implementing [along.f](doc/along.f.md).
 
     npm install
+    tsc
     ./node_modules/.bin/webpack --progress --colors --watch
     ./node_modules/.bin/electron .
 
