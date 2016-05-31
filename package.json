@@ -4,7 +4,7 @@
   "main": "main.js",
   "scripts": {
     "test": "mocha --compilers js:babel-register",
-    "doc": "jsdoc ./actions/index.js ./reducers/index.js -d ./dist/jsdoc"
+    "doc": "jsdoc ./src/actions/index.js ./src/reducers/index.js -d ./dist/jsdoc"
   },
   "dependencies": {
     "react-dom": "~0.14.6",
