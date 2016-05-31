@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import brace from 'brace'
+import 'brace'
 
 export default class Editor extends Component {
   componentDidMount() {
