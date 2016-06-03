@@ -3,7 +3,9 @@
   "version": "0.1.1",
   "main": "main.js",
   "scripts": {
+    "build": "tsc; webpack",
     "test": "mocha --compilers js:babel-register",
+    "prepublish": "npm run build",
     "doc": "jsdoc ./src/actions/index.js ./src/reducers/index.js -d ./dist/jsdoc"
   },
   "dependencies": {
@@ -26,6 +28,7 @@
     "jsdoc": "^3.4.0",
     "mocha": "~2.4.5",
     "style-loader": "~0.13.0",
+    "typescript": "^1.8.10",
     "webpack": "~1.12.12"
   }
 }
