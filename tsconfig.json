@@ -5,10 +5,13 @@
         "module": "es6",
         "target": "es6"
     },
-    "exclude": [
-        "node_modules",
-        "tsDist",
-        "dist",
-        "webpack.config.js"
+    "files": [
+        "src/actions/index.js",
+        "src/components/Connection.js",
+        "src/components/Editor.js",
+        "src/components/Repl.js",
+        "src/containers/App.js",
+        "src/index.js",
+        "src/reducers/index.js"
     ]
 }

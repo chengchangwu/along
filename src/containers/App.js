@@ -5,7 +5,7 @@ import 'brace/mode/forth'
 import 'brace/theme/github'
 import Connection from '../components/Connection'
 import Repl from '../components/Repl'
-import '../../../assets/style.css'
+import '../../assets/style.css'
 import { replFocus, replDefocus, replChange, replKeyDown, replKeyUp, replEnter,
   replOutput,
   connectWs, setUrl } from '../actions'

@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 module.exports = {
   entry: [
-    './tsDist/src/index'
+    './tsDist/index'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
