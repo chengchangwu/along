@@ -6,7 +6,7 @@
     "clean": "rimraf dist lib tsDist",
     "build:tsc": "tsc",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
-    "build": "npm run build:commonjs",
+    "build": "npm run build:commonjs && webpack",
     "test": "mocha --compilers js:babel-register",
     "prepublish": "npm run clean && npm run build",
     "postinstall": "npm run prepublish",
