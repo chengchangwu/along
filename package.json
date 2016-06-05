@@ -1,16 +1,16 @@
 {
   "name": "along",
   "version": "0.1.2",
-  "main": "main.js",
+  "main": "./lib/index.js",
   "scripts": {
-    "clean": "rimraf dist lib tsDist",
+    "clean": "rimraf lib tsDist doc/jsdoc",
     "build:tsc": "tsc",
     "build:commonjs": "cross-env BABEL_ENV=commonjs babel src --out-dir lib",
-    "build": "npm run build:commonjs && webpack",
+    "build": "npm run build:commonjs",
     "test": "mocha --compilers js:babel-register",
     "prepublish": "npm run clean && npm run build",
     "postinstall": "npm run prepublish",
-    "doc": "jsdoc ./src/actions/index.js ./src/reducers/index.js -d ./dist/jsdoc"
+    "doc": "jsdoc ./src/actions/index.js ./src/reducers/index.js -d ./doc/jsdoc"
   },
   "dependencies": {
     "react-dom": "~0.14.6",
@@ -23,19 +23,14 @@
   "devDependencies": {
     "babel-cli": "^6.9.0",
     "babel-core": "~6.5.1",
-    "babel-loader": "~6.2.2",
     "babel-preset-es2015": "~6.5.0",
     "babel-preset-react": "~6.5.0",
     "babel-register": "~6.5.1",
     "chai": "~3.5.0",
     "cross-env": "^1.0.8",
-    "css-loader": "^0.18.0",
-    "electron-prebuilt": "~0.36.5",
     "jsdoc": "^3.4.0",
     "mocha": "~2.4.5",
     "rimraf": "^2.5.2",
-    "style-loader": "~0.13.0",
-    "typescript": "^1.8.10",
-    "webpack": "~1.12.12"
+    "typescript": "^1.8.10"
   }
 }

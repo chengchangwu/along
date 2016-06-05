@@ -1,0 +1,15 @@
+{
+  "name": "along-example",
+  "version": "0.1.2",
+  "main": "main.js",
+  "scripts": {
+    "build": "./node_modules/.bin/webpack"
+  },
+  "devDependencies": {
+    "babel-loader": "~6.2.2",
+    "style-loader": "~0.13.0",
+    "css-loader": "^0.18.0",
+    "webpack": "~1.12.12",
+    "electron-prebuilt": "~0.36.5"
+  }
+}

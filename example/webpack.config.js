@@ -2,11 +2,11 @@ var path = require('path');
 var webpack = require('webpack');
 module.exports = {
   entry: [
-    './lib/index'
+    './index'
   ],
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: 'along.js',
+    filename: 'index.js',
     publicPath: '/static/'
   },
   module: {
@@ -14,7 +14,8 @@ module.exports = {
       {
         test: /\.css$/,
         loader: "style-loader!css-loader"
-      }
+      },
+      { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader" }
     ]
   }
 }

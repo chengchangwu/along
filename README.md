@@ -1,9 +1,16 @@
 # Along #
 A Web-based IDE for all Forths implementing [along.f](doc/along.f.md).
 
+## Build library
+
     npm install
     npm run build
-    ./node_modules/.bin/webpack --progress --colors --watch
+    
+## Run example
+
+    cd example
+    npm install
+    npm run build
     ./node_modules/.bin/electron .
 
 ## API
