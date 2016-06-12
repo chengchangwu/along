@@ -57,7 +57,6 @@ export function input(state = {text: "", cursorX: 0, history: [], history_idx: 0
       return Object.assign({}, state, {text: action.value, cursorX: action.cursorX, history_idx: state.history.length});
     case REPL_ENTER: {
       let history = [...state.history, state.text]
-      console.log("Enter " + state.text)
       return Object.assign({}, state, {text: "", history: history, history_idx: history.length});
     }
     default:
@@ -67,7 +66,6 @@ export function input(state = {text: "", cursorX: 0, history: [], history_idx: 0
 
 /** Output reducer */
 export function output(state = {history: []}, action) {
-  console.log(action);
   switch(action.type) {
     case REPL_OUTPUT:
       let history = [...state.history, ...action.text.split('\n')];
