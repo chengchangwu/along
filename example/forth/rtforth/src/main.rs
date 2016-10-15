@@ -93,17 +93,16 @@ fn forth_thread(
   vm.add_facility();
   vm.add_float();
 
-  vm.state().auto_flush = false;
   loop {
     match forth_rx.pop() {
       text => {
         vm.set_source(&text);
         match vm.evaluate() {
-          Some(e) => {
+          Err(e) => {
             println!("Error {:?}", e);
             forth_tx.push("err".to_string());
           },
-          None => {
+          Ok(()) => {
             let mut buf = vm.output_buffer().take().unwrap();
             writeln!(buf, " ok");
             forth_tx.push(buf.clone());
